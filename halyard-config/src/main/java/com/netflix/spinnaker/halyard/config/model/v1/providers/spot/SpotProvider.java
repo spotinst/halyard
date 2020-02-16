@@ -24,10 +24,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SpotProvider extends Provider<SpotAccount> implements Cloneable {
-    @Secret String apiToken;
+  @Secret String apiToken;
 
-    @Override
-    public ProviderType providerType() {
-        return ProviderType.SPOT;
-    }
+  @Override
+  public ProviderType providerType() {
+    return ProviderType.SPOT;
+  }
 }

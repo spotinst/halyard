@@ -22,30 +22,28 @@ import com.netflix.spinnaker.halyard.config.model.v1.providers.spot.SpotAccount;
 import com.netflix.spinnaker.halyard.config.problem.v1.ConfigProblemSetBuilder;
 import com.netflix.spinnaker.halyard.config.services.v1.ProviderService;
 import com.netflix.spinnaker.halyard.core.problem.v1.Problem;
+import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.regex.Pattern;
 
 @Component
 public class SpotAccountValidator extends Validator<SpotAccount> {
 
-    @Autowired
-    ProviderService providerService;
+  @Autowired ProviderService providerService;
 
-    private static final Pattern SPOT_ACCOUNT_PATTERN = Pattern.compile("^act-[a-zA-Z0-9]{8}$");
+  private static final Pattern SPOT_ACCOUNT_PATTERN = Pattern.compile("^act-[a-zA-Z0-9]{8}$");
 
-    @Override
-    public void validate(ConfigProblemSetBuilder p, SpotAccount spotAccount) {
-        String  accountId                = spotAccount.getAccountId();
-        Boolean isAccountIdPattternValid = checkIfAccountIdPatternIsValid(accountId);
+  @Override
+  public void validate(ConfigProblemSetBuilder p, SpotAccount spotAccount) {
+    String accountId = spotAccount.getAccountId();
+    Boolean isAccountIdPattternValid = checkIfAccountIdPatternIsValid(accountId);
 
-        if (isAccountIdPattternValid == false) {
-            p.addProblem(Problem.Severity.FATAL, "Invalid Account ID: " + accountId);
-        }
+    if (isAccountIdPattternValid == false) {
+      p.addProblem(Problem.Severity.FATAL, "Invalid Account ID: " + accountId);
     }
+  }
 
-    private Boolean checkIfAccountIdPatternIsValid(String accountId) {
-        return SPOT_ACCOUNT_PATTERN.matcher(accountId).matches();
-    }
+  private Boolean checkIfAccountIdPatternIsValid(String accountId) {
+    return SPOT_ACCOUNT_PATTERN.matcher(accountId).matches();
+  }
 }

@@ -21,18 +21,16 @@ import com.beust.jcommander.Parameters;
 import com.netflix.spinnaker.halyard.cli.command.v1.config.providers.AbstractNamedProviderCommand;
 import com.netflix.spinnaker.halyard.config.model.v1.node.Provider;
 
-/**
- * Interact with the spot provider
- */
+/** Interact with the spot provider */
 @Parameters(separators = "=")
 public class SpotCommand extends AbstractNamedProviderCommand {
-    protected String getProviderName() {
-        return Provider.ProviderType.SPOT.getName();
-    }
+  protected String getProviderName() {
+    return Provider.ProviderType.SPOT.getName();
+  }
 
-    public SpotCommand() {
-        super();
-        registerSubcommand(new SpotAccountCommand());
-        registerSubcommand(new SpotEditProviderCommand());
-    }
+  public SpotCommand() {
+    super();
+    registerSubcommand(new SpotAccountCommand());
+    registerSubcommand(new SpotEditProviderCommand());
+  }
 }

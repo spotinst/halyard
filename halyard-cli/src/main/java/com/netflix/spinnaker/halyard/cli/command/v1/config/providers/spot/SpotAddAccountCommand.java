@@ -30,9 +30,9 @@ public class SpotAddAccountCommand extends AbstractAddAccountCommand {
   }
 
   @Parameter(
-          names = "--account-id",
-          description = AwsCommandProperties.ACCOUNT_ID_DESCRIPTION,
-          required = true)
+      names = "--account-id",
+      description = AwsCommandProperties.ACCOUNT_ID_DESCRIPTION,
+      required = true)
   private String accountId;
 
   @Override

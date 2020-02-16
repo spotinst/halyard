@@ -104,7 +104,6 @@ public abstract class Provider<A extends Account> extends Node implements Clonea
     TENCENTCLOUD("tencentcloud"),
     SPOT("spot");
 
-
     @Getter String name;
 
     @Getter String id;

@@ -25,16 +25,16 @@ import com.netflix.spinnaker.halyard.config.model.v1.providers.spot.SpotAccount;
 
 @Parameters(separators = "=")
 public class SpotEditAccountCommand extends AbstractEditAccountCommand<SpotAccount> {
-    protected String getProviderName() {
-        return "spot";
-    }
+  protected String getProviderName() {
+    return "spot";
+  }
 
-    @Parameter(names = "--account-id", description = SpotCommandProperties.ACCOUNT_ID_DESCRIPTION)
-    private String accountId;
+  @Parameter(names = "--account-id", description = SpotCommandProperties.ACCOUNT_ID_DESCRIPTION)
+  private String accountId;
 
-    @Override
-    protected Account editAccount(SpotAccount account) {
-        account.setAccountId(isSet(accountId) ? accountId : account.getAccountId());
-        return account;
-    }
+  @Override
+  protected Account editAccount(SpotAccount account) {
+    account.setAccountId(isSet(accountId) ? accountId : account.getAccountId());
+    return account;
+  }
 }

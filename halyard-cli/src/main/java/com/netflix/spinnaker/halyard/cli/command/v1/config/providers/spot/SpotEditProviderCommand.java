@@ -30,23 +30,28 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Parameters(separators = "=")
 @Data
-public class SpotEditProviderCommand extends AbstractEditProviderCommand<SpotAccount, SpotProvider> {
-    String shortDescription = "Set provider-wide properties for the Spot provider";
+public class SpotEditProviderCommand
+    extends AbstractEditProviderCommand<SpotAccount, SpotProvider> {
+  String shortDescription = "Set provider-wide properties for the Spot provider";
 
-    String longDescription = "The Spot provider requires an existing Organization, and a valid api token which " +
-                             "will be used to authenticate on behalf of all the Spot accounts under that Organization. " +
-                             "See https://api.spotinst.com/spotinst-api/administration/create-an-api-token/ for more information on how to generate an api token.";
+  String longDescription =
+      "The Spot provider requires an existing Organization, and a valid api token which "
+          + "will be used to authenticate on behalf of all the Spot accounts under that Organization. "
+          + "See https://api.spotinst.com/spotinst-api/administration/create-an-api-token/ for more information on how to generate an api token.";
 
-    @Parameter(names = "--api-token", description = SpotCommandProperties.API_TOKEN_DESCRIPTION, password = true)
-    private String apiToken;
+  @Parameter(
+      names = "--api-token",
+      description = SpotCommandProperties.API_TOKEN_DESCRIPTION,
+      password = true)
+  private String apiToken;
 
-    protected String getProviderName() {
-        return Provider.ProviderType.SPOT.getName();
-    }
+  protected String getProviderName() {
+    return Provider.ProviderType.SPOT.getName();
+  }
 
-    @Override
-    protected Provider editProvider(SpotProvider provider) {
-        provider.setApiToken(isSet(apiToken) ? apiToken : provider.getApiToken());
-        return provider;
-    }
+  @Override
+  protected Provider editProvider(SpotProvider provider) {
+    provider.setApiToken(isSet(apiToken) ? apiToken : provider.getApiToken());
+    return provider;
+  }
 }

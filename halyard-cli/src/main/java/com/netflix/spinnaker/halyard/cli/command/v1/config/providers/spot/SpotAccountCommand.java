@@ -20,18 +20,16 @@ package com.netflix.spinnaker.halyard.cli.command.v1.config.providers.spot;
 import com.beust.jcommander.Parameters;
 import com.netflix.spinnaker.halyard.cli.command.v1.config.providers.AbstractAccountCommand;
 
-/**
- * Interact with the spot provider's accounts
- */
+/** Interact with the spot provider's accounts */
 @Parameters(separators = "=")
 public class SpotAccountCommand extends AbstractAccountCommand {
-    protected String getProviderName() {
-        return "spot";
-    }
+  protected String getProviderName() {
+    return "spot";
+  }
 
-    public SpotAccountCommand() {
-        super();
-        registerSubcommand(new SpotAddAccountCommand());
-        registerSubcommand(new SpotEditAccountCommand());
-    }
+  public SpotAccountCommand() {
+    super();
+    registerSubcommand(new SpotAddAccountCommand());
+    registerSubcommand(new SpotEditAccountCommand());
+  }
 }

@@ -24,5 +24,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SpotAccount extends Account {
-    private String accountId;
+  private String accountId;
 }

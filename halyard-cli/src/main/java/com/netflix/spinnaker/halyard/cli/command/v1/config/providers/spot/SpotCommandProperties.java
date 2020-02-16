@@ -19,10 +19,8 @@ package com.netflix.spinnaker.halyard.cli.command.v1.config.providers.spot;
 
 public class SpotCommandProperties {
 
-  public static final String ACCOUNT_ID_DESCRIPTION =
-      "Your Spot account ID to manage. ";
-
+  public static final String ACCOUNT_ID_DESCRIPTION = "Your Spot account ID to manage. ";
 
   public static final String API_TOKEN_DESCRIPTION =
-          "Your Spot API Token associated with your organization.";
+      "Your Spot API Token associated with your organization.";
 }

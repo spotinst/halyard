@@ -45,18 +45,17 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @JsonIgnoreProperties({"openstack"})
 public class Providers extends Node implements Cloneable {
-  AppengineProvider      appengine      = new AppengineProvider();
-  AwsProvider            aws            = new AwsProvider();
-  EcsProvider            ecs            = new EcsProvider();
-  AzureProvider          azure          = new AzureProvider();
-  DCOSProvider           dcos           = new DCOSProvider();
+  AppengineProvider appengine = new AppengineProvider();
+  AwsProvider aws = new AwsProvider();
+  EcsProvider ecs = new EcsProvider();
+  AzureProvider azure = new AzureProvider();
+  DCOSProvider dcos = new DCOSProvider();
   DockerRegistryProvider dockerRegistry = new DockerRegistryProvider();
-  GoogleProvider         google         = new GoogleProvider();
-  HuaweiCloudProvider    huaweicloud    = new HuaweiCloudProvider();
-  KubernetesProvider     kubernetes     = new KubernetesProvider();
-  TencentCloudProvider   tencentcloud   = new TencentCloudProvider();
-  SpotProvider           spot           = new SpotProvider();
-
+  GoogleProvider google = new GoogleProvider();
+  HuaweiCloudProvider huaweicloud = new HuaweiCloudProvider();
+  KubernetesProvider kubernetes = new KubernetesProvider();
+  TencentCloudProvider tencentcloud = new TencentCloudProvider();
+  SpotProvider spot = new SpotProvider();
 
   @JsonProperty(access = Access.WRITE_ONLY)
   OracleBMCSProvider oraclebmcs = new OracleBMCSProvider();
