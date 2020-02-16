@@ -101,7 +101,9 @@ public abstract class Provider<A extends Account> extends Node implements Clonea
     KUBERNETES("kubernetes"),
     ORACLE("oracle"),
     ORACLEBMCS("oraclebmcs"), // obsolete, replaced by ORACLE
-    TENCENTCLOUD("tencentcloud");
+    TENCENTCLOUD("tencentcloud"),
+    SPOT("spot");
+
 
     @Getter String name;
 

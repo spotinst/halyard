@@ -31,6 +31,7 @@ import com.netflix.spinnaker.halyard.config.model.v1.providers.huaweicloud.Huawe
 import com.netflix.spinnaker.halyard.config.model.v1.providers.kubernetes.KubernetesProvider;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.oracle.OracleBMCSProvider;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.oracle.OracleProvider;
+import com.netflix.spinnaker.halyard.config.model.v1.providers.spot.SpotProvider;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.tencentcloud.TencentCloudProvider;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -44,16 +45,18 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @JsonIgnoreProperties({"openstack"})
 public class Providers extends Node implements Cloneable {
-  AppengineProvider appengine = new AppengineProvider();
-  AwsProvider aws = new AwsProvider();
-  EcsProvider ecs = new EcsProvider();
-  AzureProvider azure = new AzureProvider();
-  DCOSProvider dcos = new DCOSProvider();
+  AppengineProvider      appengine      = new AppengineProvider();
+  AwsProvider            aws            = new AwsProvider();
+  EcsProvider            ecs            = new EcsProvider();
+  AzureProvider          azure          = new AzureProvider();
+  DCOSProvider           dcos           = new DCOSProvider();
   DockerRegistryProvider dockerRegistry = new DockerRegistryProvider();
-  GoogleProvider google = new GoogleProvider();
-  HuaweiCloudProvider huaweicloud = new HuaweiCloudProvider();
-  KubernetesProvider kubernetes = new KubernetesProvider();
-  TencentCloudProvider tencentcloud = new TencentCloudProvider();
+  GoogleProvider         google         = new GoogleProvider();
+  HuaweiCloudProvider    huaweicloud    = new HuaweiCloudProvider();
+  KubernetesProvider     kubernetes     = new KubernetesProvider();
+  TencentCloudProvider   tencentcloud   = new TencentCloudProvider();
+  SpotProvider           spot           = new SpotProvider();
+
 
   @JsonProperty(access = Access.WRITE_ONLY)
   OracleBMCSProvider oraclebmcs = new OracleBMCSProvider();

@@ -35,6 +35,7 @@ import com.netflix.spinnaker.halyard.config.model.v1.providers.google.GoogleProv
 import com.netflix.spinnaker.halyard.config.model.v1.providers.huaweicloud.HuaweiCloudAccount;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.huaweicloud.HuaweiCloudProvider;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.kubernetes.KubernetesProvider;
+import com.netflix.spinnaker.halyard.config.model.v1.providers.spot.SpotProvider;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.tencentcloud.TencentCloudAccount;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.tencentcloud.TencentCloudProvider;
 import com.netflix.spinnaker.halyard.config.model.v1.security.UiSecurity;
@@ -262,6 +263,9 @@ public class DeckProfileFactory extends RegistryBackedProfileFactory {
       bindings.put("canary.templatesEnabled", canary.isTemplatesEnabled());
       bindings.put("canary.showAllCanaryConfigs", canary.isShowAllConfigsEnabled());
     }
+
+    SpotProvider spotProvider = deploymentConfiguration.getProviders().getSpot();
+    bindings.put("spot.default.account", spotProvider.getPrimaryAccount());
 
     profile
         .appendContents(configTemplate.setBindings(bindings).toString())

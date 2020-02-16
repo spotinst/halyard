@@ -504,6 +504,16 @@
  * [**hal config provider oracle bakery edit**](#hal-config-provider-oracle-bakery-edit)
  * [**hal config provider oracle disable**](#hal-config-provider-oracle-disable)
  * [**hal config provider oracle enable**](#hal-config-provider-oracle-enable)
+ * [**hal config provider spot**](#hal-config-provider-spot)
+ * [**hal config provider spot account**](#hal-config-provider-spot-account)
+ * [**hal config provider spot account add**](#hal-config-provider-spot-account-add)
+ * [**hal config provider spot account delete**](#hal-config-provider-spot-account-delete)
+ * [**hal config provider spot account edit**](#hal-config-provider-spot-account-edit)
+ * [**hal config provider spot account get**](#hal-config-provider-spot-account-get)
+ * [**hal config provider spot account list**](#hal-config-provider-spot-account-list)
+ * [**hal config provider spot disable**](#hal-config-provider-spot-disable)
+ * [**hal config provider spot edit**](#hal-config-provider-spot-edit)
+ * [**hal config provider spot enable**](#hal-config-provider-spot-enable)
  * [**hal config provider tencentcloud**](#hal-config-provider-tencentcloud)
  * [**hal config provider tencentcloud account**](#hal-config-provider-tencentcloud-account)
  * [**hal config provider tencentcloud account add**](#hal-config-provider-tencentcloud-account-add)
@@ -7077,6 +7087,7 @@ hal config provider [subcommands]
  * `huaweicloud`: Manage and view Spinnaker configuration for the huaweicloud provider
  * `kubernetes`: Manage and view Spinnaker configuration for the kubernetes provider
  * `oracle`: Manage and view Spinnaker configuration for the oracle provider
+ * `spot`: Manage and view Spinnaker configuration for the spot provider
  * `tencentcloud`: Manage and view Spinnaker configuration for the tencentcloud provider
 
 ---
@@ -10025,6 +10036,191 @@ Set the oracle provider as enabled
 #### Usage
 ```
 hal config provider oracle enable [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config provider spot
+
+Manage and view Spinnaker configuration for the spot provider
+
+#### Usage
+```
+hal config provider spot [parameters] [subcommands]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+#### Subcommands
+ * `account`: Manage and view Spinnaker configuration for the spot provider's account
+ * `disable`: Set the spot provider as disabled
+ * `edit`: Set provider-wide properties for the Spot provider
+ * `enable`: Set the spot provider as enabled
+
+---
+## hal config provider spot account
+
+Manage and view Spinnaker configuration for the spot provider's account
+
+#### Usage
+```
+hal config provider spot account ACCOUNT [parameters] [subcommands]
+```
+
+#### Parameters
+`ACCOUNT`: The name of the account to operate on.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+#### Subcommands
+ * `add`: Add an account to the spot provider.
+ * `delete`: Delete a specific spot account by name.
+ * `edit`: Edit an account in the spot provider.
+ * `get`: Get the specified account details for the spot provider.
+ * `list`: List the account names for the spot provider.
+
+---
+## hal config provider spot account add
+
+Add an account to the spot provider.
+
+#### Usage
+```
+hal config provider spot account add ACCOUNT [parameters]
+```
+
+#### Parameters
+`ACCOUNT`: The name of the account to operate on.
+ * `--account-id`: (*Required*) Your AWS account ID to manage. See [http://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html](http://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html) for more information.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+ * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
+ * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
+ * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
+ * `--write-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to make changes to this account's cloud resources.
+
+
+---
+## hal config provider spot account delete
+
+Delete a specific spot account by name.
+
+#### Usage
+```
+hal config provider spot account delete ACCOUNT [parameters]
+```
+
+#### Parameters
+`ACCOUNT`: The name of the account to operate on.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config provider spot account edit
+
+Edit an account in the spot provider.
+
+#### Usage
+```
+hal config provider spot account edit ACCOUNT [parameters]
+```
+
+#### Parameters
+`ACCOUNT`: The name of the account to operate on.
+ * `--account-id`: Your Spot account ID to manage. 
+ * `--add-read-permission`: Add this permission to the list of read permissions.
+ * `--add-required-group-membership`: Add this group to the list of required group memberships.
+ * `--add-write-permission`: Add this permission to the list of write permissions.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+ * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
+ * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
+ * `--remove-read-permission`: Remove this permission from the list of read permissions.
+ * `--remove-required-group-membership`: Remove this group from the list of required group memberships.
+ * `--remove-write-permission`: Remove this permission to from list of write permissions.
+ * `--required-group-membership`: A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
+ * `--write-permissions`: A user must have at least one of these roles in order to make changes to this account's cloud resources.
+
+
+---
+## hal config provider spot account get
+
+Get the specified account details for the spot provider.
+
+#### Usage
+```
+hal config provider spot account get ACCOUNT [parameters]
+```
+
+#### Parameters
+`ACCOUNT`: The name of the account to operate on.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config provider spot account list
+
+List the account names for the spot provider.
+
+#### Usage
+```
+hal config provider spot account list [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config provider spot disable
+
+Set the spot provider as disabled
+
+#### Usage
+```
+hal config provider spot disable [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config provider spot edit
+
+The Spot provider requires an existing Organization, and a valid api token which will be used to authenticate on behalf of all the Spot accounts under that Organization. See [https://api.spotinst.com/spotinst-api/administration/create-an-api-token/](https://api.spotinst.com/spotinst-api/administration/create-an-api-token/) for more information on how to generate an api token.
+
+#### Usage
+```
+hal config provider spot edit [parameters]
+```
+
+#### Parameters
+ * `--api-token`: (*Sensitive data* - user will be prompted on standard input) Your Spot API Token associated with your organization.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config provider spot enable
+
+Set the spot provider as enabled
+
+#### Usage
+```
+hal config provider spot enable [parameters]
 ```
 
 #### Parameters
