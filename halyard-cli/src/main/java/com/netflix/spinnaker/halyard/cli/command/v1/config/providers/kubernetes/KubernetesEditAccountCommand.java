@@ -23,6 +23,7 @@ import com.netflix.spinnaker.halyard.cli.command.v1.converter.LocalFileConverter
 import com.netflix.spinnaker.halyard.config.model.v1.node.Account;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.containers.DockerRegistryReference;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.kubernetes.KubernetesAccount;
+import com.netflix.spinnaker.halyard.config.model.v1.providers.kubernetes.KubernetesAccount.ProviderVersion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -213,10 +214,56 @@ public class KubernetesEditAccountCommand extends AbstractEditAccountCommand<Kub
   public Boolean liveManifestCalls;
 
   @Parameter(
+      names = "--raw-resource-endpoint-kind-expressions",
+      description = KubernetesCommandProperties.RAW_RESOURCES_ENDPOINT_KIND_EXPRESSIONS)
+  private List<String> rreKindExpressions = new ArrayList<>();
+
+  @Parameter(
+      names = "--add-raw-resource-endpoint-kind-expression",
+      description =
+          "Add this expression to the list of kind expressions for the raw resource endpoint configuration.")
+  private String addRREKindExpression;
+
+  @Parameter(
+      names = "--remove-raw-resource-endpoint-kind-expression",
+      description =
+          "Remove this expression from list of kind expressions for the raw resource endpoint configuration.")
+  private String removeRREKindExpression;
+
+  @Parameter(
+      names = "--raw-resource-endpoint-omit-kind-expressions",
+      variableArity = true,
+      description = KubernetesCommandProperties.RAW_RESOURCES_ENDPOINT_OMIT_KIND_EXPRESSIONS)
+  private List<String> rreOmitKindExpressions = new ArrayList<>();
+
+  @Parameter(
+      names = "--add-raw-resource-endpoint-omit-kind-expression",
+      description =
+          "Add this expression to the list of omit kind expressions for the raw resources endpoint configuration.")
+  private String addRREOmitKindExpression;
+
+  @Parameter(
+      names = "--remove-raw-resource-endpoint-omit-kind-expression",
+      description =
+          "Remove this expression from the list of omit kind expressions for the raw resources endpoint configuration.")
+  private String removeRREOmitKindExpression;
+
+  @Parameter(
       names = "--cache-threads",
       arity = 1,
       description = KubernetesCommandProperties.CACHE_THREADS)
   private Integer cacheThreads;
+
+  @Parameter(
+      names = "--cache-all-application-relationships",
+      arity = 1,
+      description = KubernetesCommandProperties.CACHE_ALL_APPLICATION_RELATIONSHIPS)
+  public Boolean cacheAllApplicationRelationships;
+
+  @Parameter(
+      names = "--provider-version",
+      description = KubernetesCommandProperties.PROVIDER_VERSION_DESCRIPTION)
+  private ProviderVersion providerVersion;
 
   @Override
   protected Account editAccount(KubernetesAccount account) {
@@ -337,6 +384,43 @@ public class KubernetesEditAccountCommand extends AbstractEditAccountCommand<Kub
     account.setLiveManifestCalls(
         isSet(liveManifestCalls) ? liveManifestCalls : account.getLiveManifestCalls());
     account.setCacheThreads(isSet(cacheThreads) ? cacheThreads : account.getCacheThreads());
+    account.setCacheAllApplicationRelationships(
+        isSet(cacheAllApplicationRelationships)
+            ? cacheAllApplicationRelationships
+            : account.getCacheAllApplicationRelationships());
+
+    try {
+      account
+          .getRawResourcesEndpointConfig()
+          .setKindExpressions(
+              updateStringList(
+                  account.getRawResourcesEndpointConfig().getKindExpressions(),
+                  rreKindExpressions,
+                  addRREKindExpression,
+                  removeRREKindExpression));
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(
+          "Set either --raw-resource-endpoint-kind-expressions or --[add/remove]-raw-resource-kind-expression");
+    }
+
+    try {
+      account
+          .getRawResourcesEndpointConfig()
+          .setOmitKindExpressions(
+              updateStringList(
+                  account.getRawResourcesEndpointConfig().getOmitKindExpressions(),
+                  rreOmitKindExpressions,
+                  addRREOmitKindExpression,
+                  removeRREOmitKindExpression));
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(
+          "Set either --raw-resource-endpoint-omit-kind-expressions or --[add/remove]-raw-resource-endpoint-omit-kind-expression");
+    }
+
+    if (isSet(providerVersion)) {
+      account.setProviderVersion(providerVersion);
+    }
+
     return account;
   }
 }

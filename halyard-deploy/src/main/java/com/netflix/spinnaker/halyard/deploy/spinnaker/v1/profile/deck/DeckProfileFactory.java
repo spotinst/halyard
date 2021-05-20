@@ -102,7 +102,7 @@ public class DeckProfileFactory extends RegistryBackedProfileFactory {
     if (validatedVersion.isPresent()) {
       String changelog = validatedVersion.get().getChangelog();
       bindings.put("changelog.gist.id", changelog.substring(changelog.lastIndexOf("/") + 1));
-      bindings.put("changelog.gist.name", "changelog.md");
+      bindings.put("changelog.gist.name", String.format("%s.md", version));
     } else {
       bindings.put("changelog.gist.id", "");
       bindings.put("changelog.gist.name", "");
@@ -129,26 +129,14 @@ public class DeckProfileFactory extends RegistryBackedProfileFactory {
         "features.mineCanary",
         Boolean.toString(features.getMineCanary() != null ? features.getMineCanary() : false));
     bindings.put(
-        "features.appengineContainerImageUrlDeployments",
+        "features.managedPipelineTemplatesV2UI",
         Boolean.toString(
-            features.getAppengineContainerImageUrlDeployments() != null
-                ? features.getAppengineContainerImageUrlDeployments()
+            features.getManagedPipelineTemplatesV2UI() != null
+                ? features.getManagedPipelineTemplatesV2UI()
                 : false));
-    bindings.put(
-        "features.travis",
-        Boolean.toString(features.getTravis() != null ? features.getTravis() : false));
-    bindings.put(
-        "features.wercker",
-        Boolean.toString(features.getWercker() != null ? features.getWercker() : false));
     bindings.put(
         "features.gremlin",
         Boolean.toString(features.getGremlin() != null ? features.getGremlin() : false));
-    bindings.put(
-        "features.infrastructureStages",
-        Boolean.toString(
-            features.getInfrastructureStages() != null
-                ? features.getInfrastructureStages()
-                : false));
 
     // Configure Kubernetes
     KubernetesProvider kubernetesProvider = deploymentConfiguration.getProviders().getKubernetes();
@@ -170,8 +158,6 @@ public class DeckProfileFactory extends RegistryBackedProfileFactory {
     // Configure Appengine
     AppengineProvider appengineProvider = deploymentConfiguration.getProviders().getAppengine();
     bindings.put("appengine.default.account", appengineProvider.getPrimaryAccount());
-    bindings.put(
-        "appengine.enabled", Boolean.toString(appengineProvider.getPrimaryAccount() != null));
 
     // Configure DC/OS
     final DCOSProvider dcosProvider = deploymentConfiguration.getProviders().getDcos();
@@ -236,8 +222,6 @@ public class DeckProfileFactory extends RegistryBackedProfileFactory {
     }
 
     // Configure notifications
-    bindings.put("notifications.enabled", notifications.isEnabled() + "");
-
     SlackNotification slackNotification = notifications.getSlack();
     bindings.put("notifications.slack.enabled", slackNotification.isEnabled() + "");
     bindings.put("notifications.slack.botName", slackNotification.getBotName());

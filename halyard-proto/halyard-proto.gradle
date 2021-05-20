@@ -1,4 +1,3 @@
-apply plugin: 'java'
 apply plugin: 'com.google.protobuf'
 
 dependencies {
@@ -6,6 +5,9 @@ dependencies {
   implementation 'com.google.guava:guava:23.5-jre'
   api 'com.google.api.grpc:grpc-google-common-protos:1.0.5'
   implementation 'io.grpc:grpc-all:1.8.0'
+
+  // requirement when targeting java 11
+  implementation 'javax.annotation:javax.annotation-api:1.3.2'
 }
 
 protobuf {

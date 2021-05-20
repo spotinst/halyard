@@ -34,13 +34,11 @@ public class AwsCodeBuildAddAccountCommand extends AbstractAddAccountCommand {
 
   @Parameter(
       names = "--account-id",
-      required = true,
       description = AwsCodeBuildCommandProperties.ACCOUNT_ID_DESCRIPTION)
   private String accountId;
 
   @Parameter(
       names = "--assume-role",
-      required = true,
       description = AwsCodeBuildCommandProperties.ASSUME_ROLE_DESCRIPTION)
   private String assumeRole;
 

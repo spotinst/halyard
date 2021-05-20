@@ -23,6 +23,7 @@ import com.netflix.spinnaker.halyard.cli.command.v1.converter.LocalFileConverter
 import com.netflix.spinnaker.halyard.config.model.v1.node.Account;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.containers.DockerRegistryReference;
 import com.netflix.spinnaker.halyard.config.model.v1.providers.kubernetes.KubernetesAccount;
+import com.netflix.spinnaker.halyard.config.model.v1.providers.kubernetes.KubernetesAccount.ProviderVersion;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,6 +120,29 @@ public class KubernetesAddAccountCommand extends AbstractAddAccountCommand {
       description = KubernetesCommandProperties.CACHE_THREADS)
   private int cacheThreads = 1;
 
+  @Parameter(
+      names = "--cache-all-application-relationships",
+      arity = 1,
+      description = KubernetesCommandProperties.CACHE_ALL_APPLICATION_RELATIONSHIPS)
+  public Boolean cacheAllApplicationRelationships;
+
+  @Parameter(
+      names = "--raw-resource-endpoint-kind-expressions",
+      variableArity = true,
+      description = KubernetesCommandProperties.RAW_RESOURCES_ENDPOINT_KIND_EXPRESSIONS)
+  public List<String> rawResourcekindExpressions = new ArrayList<>();
+
+  @Parameter(
+      names = "--raw-resource-endpoint-omit-kind-expressions",
+      variableArity = true,
+      description = KubernetesCommandProperties.RAW_RESOURCES_ENDPOINT_OMIT_KIND_EXPRESSIONS)
+  public List<String> rawResourceOmitKindExpressions = new ArrayList<>();
+
+  @Parameter(
+      names = "--provider-version",
+      description = KubernetesCommandProperties.PROVIDER_VERSION_DESCRIPTION)
+  private ProviderVersion providerVersion = ProviderVersion.V2;
+
   @Override
   protected Account buildAccount(String accountName) {
     KubernetesAccount account = (KubernetesAccount) new KubernetesAccount().setName(accountName);
@@ -143,6 +167,10 @@ public class KubernetesAddAccountCommand extends AbstractAddAccountCommand {
     account.setCheckPermissionsOnStartup(checkPermissionsOnStartup);
     account.setLiveManifestCalls(liveManifestCalls);
     account.setCacheThreads(cacheThreads);
+    account.setCacheAllApplicationRelationships(cacheAllApplicationRelationships);
+    account.getRawResourcesEndpointConfig().setKindExpressions(rawResourcekindExpressions);
+    account.getRawResourcesEndpointConfig().setOmitKindExpressions(rawResourceOmitKindExpressions);
+    account.setProviderVersion(providerVersion);
 
     return account;
   }

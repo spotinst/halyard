@@ -32,6 +32,16 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class KubernetesAccount extends ContainerAccount implements Cloneable {
+  @ValidForSpinnakerVersion(
+      lowerBound = "",
+      tooLowMessage = "",
+      upperBound = "1.21.0",
+      tooHighMessage =
+          "The legacy (V1) Kubernetes provider is now deprecated. All accounts will "
+              + "now be wired as standard (V2) accounts, and providerVersion can be removed from "
+              + "all configured accounts.")
+  ProviderVersion providerVersion = ProviderVersion.V2;
+
   String context;
   String cluster;
   String user;
@@ -71,6 +81,14 @@ public class KubernetesAccount extends ContainerAccount implements Cloneable {
   String kubectlPath;
   Integer kubectlRequestTimeoutSeconds;
   Boolean checkPermissionsOnStartup;
+  RawResourcesEndpointConfig rawResourcesEndpointConfig = new RawResourcesEndpointConfig();
+  Boolean cacheAllApplicationRelationships;
+
+  @ValidForSpinnakerVersion(
+      lowerBound = "1.12.0",
+      tooLowMessage = "Live manifest mode not available prior to 1.12.0.",
+      upperBound = "1.23.0",
+      tooHighMessage = "Live manifest mode no longer necessary as of 1.23.0.")
   Boolean liveManifestCalls;
 
   // Without the annotations, these are written as `oauthServiceAccount` and `oauthScopes`,
@@ -141,6 +159,38 @@ public class KubernetesAccount extends ContainerAccount implements Cloneable {
     int maxEntriesPerAgent;
   }
 
+  @Data
+  public static class RawResourcesEndpointConfig {
+    @JsonProperty("kindExpressions")
+    List<String> kindExpressions;
+
+    @JsonProperty("omitKindExpressions")
+    List<String> omitKindExpressions;
+
+    @JsonProperty("kindExpressions")
+    public List<String> getKindExpressions() {
+      return this.kindExpressions;
+    }
+
+    public void setKindExpressions(List<String> expressions) {
+      this.kindExpressions = expressions;
+    }
+
+    @JsonProperty("omitKindExpressions")
+    public List<String> getOmitKindExpressions() {
+      return this.omitKindExpressions;
+    }
+
+    public void setOmitKindExpressions(List<String> expressions) {
+      this.omitKindExpressions = expressions;
+    }
+  }
+
+  @JsonProperty("rawResourcesEndpointConfig")
+  public RawResourcesEndpointConfig getRawResourcesEndpointConfig() {
+    return rawResourcesEndpointConfig;
+  }
+
   // These six methods exist for backwards compatibility. Versions of Halyard prior to 1.22 would
   // write this field out twice: to 'oAuthScopes' and to 'oauthScopes'. Whichever came last in the
   // file would end up taking precedence. These methods replicate that behavior during parsing, but
@@ -176,5 +226,27 @@ public class KubernetesAccount extends ContainerAccount implements Cloneable {
   @JsonProperty("oauthServiceAccount")
   public void setOauthServiceAccount(String oAuthServiceAccount) {
     this.oAuthServiceAccount = oAuthServiceAccount;
+  }
+
+  /**
+   * @deprecated All ProviderVersion-related logic will be removed from Clouddriver by Spinnaker
+   *     1.22. We will continue to support this enum in Halyard so that we can notify users with
+   *     this field configured that it is no longer read.
+   */
+  @Deprecated
+  public enum ProviderVersion {
+    V1("v1"),
+    V2("v2");
+
+    private final String name;
+
+    ProviderVersion(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return this.name;
+    }
   }
 }

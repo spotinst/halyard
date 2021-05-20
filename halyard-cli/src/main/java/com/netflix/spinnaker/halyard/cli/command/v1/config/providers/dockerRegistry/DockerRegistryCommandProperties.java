@@ -61,8 +61,13 @@ class DockerRegistryCommandProperties {
   static final String PAGINATE_SIZE_DESCRIPTION =
       "Paginate size for the docker repository _catalog endpoint.";
 
-  static final String SORT_TAGS_BY_DATE_DESCRIPTION = "Sort tags by creation date.";
+  static final String SORT_TAGS_BY_DATE_DESCRIPTION =
+      "Sort tags by creation date. Not recommended for use with large "
+          + "registries; sorting performance scales poorly due to limitations of the Docker V2 API.";
 
   static final String TRACK_DIGESTS_DESCRIPTION =
       "Track digest changes. This is not recommended as it consumes a high QPM, and most registries are flaky.";
+
+  static final String REPOSITORIES_REGEX_DESCRIPTION =
+      "Allows to specify a Regular Expression to filter the repositories.";
 }

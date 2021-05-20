@@ -17,6 +17,7 @@
 package com.netflix.spinnaker.halyard.config.model.v1.ci.codebuild;
 
 import com.netflix.spinnaker.halyard.config.model.v1.node.Ci;
+import com.netflix.spinnaker.halyard.config.model.v1.node.Secret;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -26,6 +27,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class AwsCodeBuild extends Ci<AwsCodeBuildAccount> {
   private boolean enabled;
+  private String accessKeyId;
+  @Secret private String secretAccessKey;
   private List<AwsCodeBuildAccount> accounts = new ArrayList<>();
 
   public List<AwsCodeBuildAccount> listAccounts() {

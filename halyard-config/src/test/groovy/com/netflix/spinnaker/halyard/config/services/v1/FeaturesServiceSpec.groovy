@@ -19,8 +19,8 @@ package com.netflix.spinnaker.halyard.config.services.v1
 import spock.lang.Specification
 
 class FeaturesServiceSpec extends Specification {
-  final String DEPLOYMENT = "default"
-  final HalconfigParserMocker mocker = new HalconfigParserMocker()
+  String DEPLOYMENT = "default"
+  HalconfigParserMocker mocker = new HalconfigParserMocker()
 
   FeaturesService makeFeaturesService(String config) {
     def lookupService = new LookupService()
@@ -46,7 +46,6 @@ deploymentConfigurations:
   providers: null
   features:
     chaos: true
-    fiat: false
 """
     def featuresService = makeFeaturesService(config)
 
@@ -56,7 +55,6 @@ deploymentConfigurations:
     then:
     result != null
     result.chaos
-    !result.fiat
   }
 
   def "load a non-existent feature node"() {

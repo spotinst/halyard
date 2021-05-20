@@ -16,15 +16,19 @@
 
 package com.netflix.spinnaker.halyard.config.model.v1.providers.cloudfoundry;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netflix.spinnaker.halyard.config.model.v1.node.Account;
 import com.netflix.spinnaker.halyard.config.model.v1.node.Secret;
 import java.net.URL;
+import java.util.Map;
+import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties({"providerVersion"})
 public class CloudFoundryAccount extends Account {
   @JsonProperty("api")
   String apiHost;
@@ -38,4 +42,7 @@ public class CloudFoundryAccount extends Account {
   @Secret String password;
   String user;
   boolean skipSslValidation = false;
+
+  @JsonProperty("spaceFilter")
+  Map<String, Set<String>> spaceFilter;
 }

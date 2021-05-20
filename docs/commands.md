@@ -133,6 +133,7 @@
  * [**hal config canary datadog account get**](#hal-config-canary-datadog-account-get)
  * [**hal config canary datadog account list**](#hal-config-canary-datadog-account-list)
  * [**hal config canary datadog disable**](#hal-config-canary-datadog-disable)
+ * [**hal config canary datadog edit**](#hal-config-canary-datadog-edit)
  * [**hal config canary datadog enable**](#hal-config-canary-datadog-enable)
  * [**hal config canary disable**](#hal-config-canary-disable)
  * [**hal config canary edit**](#hal-config-canary-edit)
@@ -184,6 +185,7 @@
  * [**hal config ci codebuild account get**](#hal-config-ci-codebuild-account-get)
  * [**hal config ci codebuild account list**](#hal-config-ci-codebuild-account-list)
  * [**hal config ci codebuild disable**](#hal-config-ci-codebuild-disable)
+ * [**hal config ci codebuild edit**](#hal-config-ci-codebuild-edit)
  * [**hal config ci codebuild enable**](#hal-config-ci-codebuild-enable)
  * [**hal config ci concourse**](#hal-config-ci-concourse)
  * [**hal config ci concourse disable**](#hal-config-ci-concourse-disable)
@@ -383,6 +385,8 @@
  * [**hal config provider aws disable**](#hal-config-provider-aws-disable)
  * [**hal config provider aws edit**](#hal-config-provider-aws-edit)
  * [**hal config provider aws enable**](#hal-config-provider-aws-enable)
+ * [**hal config provider aws features**](#hal-config-provider-aws-features)
+ * [**hal config provider aws features edit**](#hal-config-provider-aws-features-edit)
  * [**hal config provider azure**](#hal-config-provider-azure)
  * [**hal config provider azure account**](#hal-config-provider-azure-account)
  * [**hal config provider azure account add**](#hal-config-provider-azure-account-add)
@@ -551,6 +555,15 @@
  * [**hal config repository artifactory search edit**](#hal-config-repository-artifactory-search-edit)
  * [**hal config repository artifactory search get**](#hal-config-repository-artifactory-search-get)
  * [**hal config repository artifactory search list**](#hal-config-repository-artifactory-search-list)
+ * [**hal config repository nexus**](#hal-config-repository-nexus)
+ * [**hal config repository nexus disable**](#hal-config-repository-nexus-disable)
+ * [**hal config repository nexus enable**](#hal-config-repository-nexus-enable)
+ * [**hal config repository nexus search**](#hal-config-repository-nexus-search)
+ * [**hal config repository nexus search add**](#hal-config-repository-nexus-search-add)
+ * [**hal config repository nexus search delete**](#hal-config-repository-nexus-search-delete)
+ * [**hal config repository nexus search edit**](#hal-config-repository-nexus-search-edit)
+ * [**hal config repository nexus search get**](#hal-config-repository-nexus-search-get)
+ * [**hal config repository nexus search list**](#hal-config-repository-nexus-search-list)
  * [**hal config security**](#hal-config-security)
  * [**hal config security api**](#hal-config-security-api)
  * [**hal config security api edit**](#hal-config-security-api-edit)
@@ -597,6 +610,10 @@
  * [**hal config security ui ssl disable**](#hal-config-security-ui-ssl-disable)
  * [**hal config security ui ssl edit**](#hal-config-security-ui-ssl-edit)
  * [**hal config security ui ssl enable**](#hal-config-security-ui-ssl-enable)
+ * [**hal config stats**](#hal-config-stats)
+ * [**hal config stats disable**](#hal-config-stats-disable)
+ * [**hal config stats edit**](#hal-config-stats-edit)
+ * [**hal config stats enable**](#hal-config-stats-enable)
  * [**hal config storage**](#hal-config-storage)
  * [**hal config storage azs**](#hal-config-storage-azs)
  * [**hal config storage azs edit**](#hal-config-storage-azs-edit)
@@ -607,10 +624,6 @@
  * [**hal config storage oracle edit**](#hal-config-storage-oracle-edit)
  * [**hal config storage s3**](#hal-config-storage-s3)
  * [**hal config storage s3 edit**](#hal-config-storage-s3-edit)
- * [**hal config telemetry**](#hal-config-telemetry)
- * [**hal config telemetry disable**](#hal-config-telemetry-disable)
- * [**hal config telemetry edit**](#hal-config-telemetry-edit)
- * [**hal config telemetry enable**](#hal-config-telemetry-enable)
  * [**hal config version**](#hal-config-version)
  * [**hal config version edit**](#hal-config-version-edit)
  * [**hal config webhook**](#hal-config-webhook)
@@ -631,7 +644,6 @@
  * [**hal plugins delete**](#hal-plugins-delete)
  * [**hal plugins disable**](#hal-plugins-disable)
  * [**hal plugins disable-downloading**](#hal-plugins-disable-downloading)
- * [**hal plugins edit**](#hal-plugins-edit)
  * [**hal plugins enable**](#hal-plugins-enable)
  * [**hal plugins enable-downloading**](#hal-plugins-enable-downloading)
  * [**hal plugins list**](#hal-plugins-list)
@@ -898,8 +910,8 @@ hal config [parameters] [subcommands]
  * `pubsub`: Configure, validate, and view the specified pubsub.
  * `repository`: Configure, validate, and view the specified repository.
  * `security`: Configure Spinnaker's security. This includes external SSL, authentication mechanisms, and authorization policies.
+ * `stats`: Show Spinnaker's stats settings.
  * `storage`: Show Spinnaker's persistent storage configuration.
- * `telemetry`: Show Spinnaker's telemetry settings.
  * `version`: Configure & view the current deployment of Spinnaker's version.
  * `webhook`: Show Spinnaker's webhook configuration.
 
@@ -2814,6 +2826,7 @@ hal config canary datadog [parameters] [subcommands]
 #### Subcommands
  * `account`: Manage and view Spinnaker configuration for the Datadog service integration's canary accounts.
  * `disable`: Set Spinnaker's canary analysis Datadog service integration to disabled.
+ * `edit`: Edit Spinnaker's canary analysis Datadog service integration settings.
  * `enable`: Set Spinnaker's canary analysis Datadog service integration to enabled.
 
 ---
@@ -2935,6 +2948,22 @@ hal config canary datadog disable [parameters]
 
 #### Parameters
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config canary datadog edit
+
+Edit Spinnaker's canary analysis Datadog service integration settings.
+
+#### Usage
+```
+hal config canary datadog edit [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--metadata-caching-interval-ms`: Number of milliseconds to wait in between caching the names of available metric types (for use in building canary configs; *Default*: `60000`).
  * `--no-validate`: (*Default*: `false`) Skip validation.
 
 
@@ -3710,6 +3739,7 @@ hal config ci codebuild [parameters] [subcommands]
 #### Subcommands
  * `account`: Manage and view Spinnaker configuration for AWS CodeBuild service account.
  * `disable`: Set the codebuild ci as disabled
+ * `edit`: Set CI provider-wide properties for AWS CodeBuild
  * `enable`: Set the codebuild ci as enabled
 
 ---
@@ -3746,8 +3776,8 @@ hal config ci codebuild account add ACCOUNT [parameters]
 
 #### Parameters
 `ACCOUNT`: The name of the account to operate on.
- * `--account-id`: (*Required*) The AWS account ID that will be used to trigger CodeBuild build.
- * `--assume-role`: (*Required*) If set, Halyard will configure a credentials provider that uses AWS Security Token Service to assume the specified role.
+ * `--account-id`: The AWS account ID that will be used to trigger CodeBuild build.
+ * `--assume-role`: If set, Halyard will configure a credentials provider that uses AWS Security Token Service to assume the specified role.
 
 Example: "user/spinnaker" or "role/spinnakerManaged"
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
@@ -3836,6 +3866,23 @@ hal config ci codebuild disable [parameters]
 #### Parameters
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config ci codebuild edit
+
+Set CI provider-wide properties for AWS CodeBuild
+
+#### Usage
+```
+hal config ci codebuild edit [parameters]
+```
+
+#### Parameters
+ * `--access-key-id`: Your AWS Access Key ID. If not provided, Halyard/Spinnaker will try to find AWS credentials as described at [http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default](http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default)
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+ * `--secret-access-key`: (*Sensitive data* - user will be prompted on standard input) Your AWS Secret Key.
 
 
 ---
@@ -4407,10 +4454,13 @@ hal config ci travis master add MASTER [parameters]
 `MASTER`: The name of the master to operate on.
  * `--address`: (*Required*) The address of the travis API ([https://api.travis-ci.org](https://api.travis-ci.org)).
  * `--base-url`: (*Required*) The base URL to the travis UI ([https://travis-ci.org](https://travis-ci.org)).
+ * `--build-result-limit`: Defines how many builds Igor should return when querying for builds for a specific repo. This affects for instance how many builds that will be displayed in the drop down when starting a manual execution of a pipeline. If set too high, the Travis API might return an error for jobs that writes a lot of logs, which is why the default setting is a bit conservative. Defaults to 10. Used for spinnaker >= 1.17.
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--filtered-repositories`: (*Default*: `[]`) Defines the list of repositories that will be scraped. Useful if the organization has a lot of repositories and you wish to speed things up by scanning only a subset.
  * `--github-token`: (*Sensitive data* - user will be prompted on standard input) The github token to authentiacte against travis with.
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--number-of-repositories`: How many repositories the travis integration should fetch from the api each time the poller runs. Should be set a bit higher than the expected maximum number of repositories built within the poll interval.
+ * `--number-of-jobs`: Defines how many jobs the Travis integration should retrieve per polling cycle. Defaults to 100. Used for spinnaker >= 1.17.
+ * `--number-of-repositories`: This property is no longer in use for Spinnaker >= 1.17 and the value will be ignored. If you want to limit the number of builds retrieved per polling cycle, you can use the property --number-of-jobs. Set this property only if you use Spinnaker < 1.17. Specifies how many repositories the travis integration should fetch from the api each time the poller runs. Should be set a bit higher than the expected maximum number of repositories built within the poll interval.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this build master or use it as a trigger source.
  * `--write-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to be able to run jobs on this build master.
 
@@ -4447,10 +4497,13 @@ hal config ci travis master edit MASTER [parameters]
  * `--add-write-permission`: Add this permission to the list of write permissions.
  * `--address`: The address of the travis API ([https://api.travis-ci.org](https://api.travis-ci.org)).
  * `--base-url`: The base URL to the travis UI ([https://travis-ci.org](https://travis-ci.org)).
+ * `--build-result-limit`: Defines how many builds Igor should return when querying for builds for a specific repo. This affects for instance how many builds that will be displayed in the drop down when starting a manual execution of a pipeline. If set too high, the Travis API might return an error for jobs that writes a lot of logs, which is why the default setting is a bit conservative. Defaults to 10. Used for spinnaker >= 1.17.
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--filtered-repositories`: (*Default*: `[]`) Defines the list of repositories that will be scraped. Useful if the organization has a lot of repositories and you wish to speed things up by scanning only a subset.
  * `--github-token`: (*Sensitive data* - user will be prompted on standard input) The github token to authentiacte against travis with.
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--number-of-repositories`: How many repositories the travis integration should fetch from the api each time the poller runs. Should be set a bit higher than the expected maximum number of repositories built within the poll interval.
+ * `--number-of-jobs`: Defines how many jobs the Travis integration should retrieve per polling cycle. Defaults to 100. Used for spinnaker >= 1.17.
+ * `--number-of-repositories`: This property is no longer in use for Spinnaker >= 1.17 and the value will be ignored. If you want to limit the number of builds retrieved per polling cycle, you can use the property --number-of-jobs. Set this property only if you use Spinnaker < 1.17. Specifies how many repositories the travis integration should fetch from the api each time the poller runs. Should be set a bit higher than the expected maximum number of repositories built within the poll interval.
  * `--read-permissions`: A user must have at least one of these roles in order to view this build master or use it as a trigger source.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
  * `--remove-write-permission`: Remove this permission from the list of write permissions.
@@ -6343,18 +6396,15 @@ hal config features edit [parameters]
 ```
 
 #### Parameters
- * `--appengine-container-image-url-deployments`: Enable appengine deployments using a container image URL from gcr.io.
  * `--artifacts`: Enable artifact support. Read more at [https://spinnaker.io/reference/artifacts/](https://spinnaker.io/reference/artifacts/)
  * `--artifacts-rewrite`: Enable new artifact support. Read more at [https://www.spinnaker.io/reference/artifacts-with-artifactsrewrite/](https://www.spinnaker.io/reference/artifacts-with-artifactsrewrite/)
  * `--chaos`: Enable Chaos Monkey support. For this to work, you'll need a running Chaos Monkey deployment. Currently, Halyard doesn't configure Chaos Monkey for you; read more instructions here [https://github.com/Netflix/chaosmonkey/wiki](https://github.com/Netflix/chaosmonkey/wiki).
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--gremlin`: Enable Gremlin fault-injection support.
- * `--infrastructure-stages`: Enable infrastructure stages. Allows for creating Load Balancers as part of pipelines.
+ * `--managed-pipeline-templates-v2-ui`: Enable managed pipeline templates v2 UI support.
  * `--mine-canary`: Enable canary support. For this to work, you'll need a canary judge configured. Currently, Halyard does not configure canary judge for you.
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--pipeline-templates`: Enable pipeline template support. Read more at [https://github.com/spinnaker/dcd-spec](https://github.com/spinnaker/dcd-spec).
- * `--travis`: Enable the Travis CI stage.
- * `--wercker`: Enable the Wercker CI stage.
 
 
 ---
@@ -7157,7 +7207,6 @@ hal config provider appengine account add ACCOUNT [parameters]
  * `--omit-services`: A list of regular expressions. Any service matching one of these regexes will be ignored by Spinnaker.
  * `--omit-versions`: A list of regular expressions. Any version matching one of these regexes will be ignored by Spinnaker.
  * `--project`: (*Required*) The Google Cloud Platform project this Spinnaker account will manage.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
  * `--services`: A list of regular expressions. Any service matching one of these regexes will be indexed by Spinnaker.
@@ -7213,7 +7262,6 @@ hal config provider appengine account edit ACCOUNT [parameters]
  * `--omit-services`: A list of regular expressions. Any service matching one of these regexes will be ignored by Spinnaker.
  * `--omit-versions`: A list of regular expressions. Any version matching one of these regexes will be ignored by Spinnaker.
  * `--project`: The Google Cloud Platform project this Spinnaker account will manage.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
  * `--remove-required-group-membership`: Remove this group from the list of required group memberships.
@@ -7325,6 +7373,7 @@ hal config provider aws [parameters] [subcommands]
  * `disable`: Set the aws provider as disabled
  * `edit`: Set provider-wide properties for the AWS provider
  * `enable`: Set the aws provider as enabled
+ * `features`: Manage and view Spinnaker configuration for the aws features configuration.
 
 ---
 ## hal config provider aws account
@@ -7373,6 +7422,7 @@ Example: [http://{{region}}.eureka.url.to.use:8080/eureka-server/v2](http://{{re
 Using {{region}} will make Spinnaker use AWS regions in the hostname to access discovery so that you can have discovery for multiple regions.
  * `--edda`: The endpoint Edda is reachable at. Edda is not a hard dependency of Spinnaker, but is helpful for reducing the request volume against AWS. See [https://github.com/Netflix/edda](https://github.com/Netflix/edda) for more information.
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
+ * `--external-id`: Optional parameter used to identify and control access to AWS resources. Set this to the same value as the ExternalID parameter in the trust policy for the role you want to assume.
  * `--launching-lifecycle-hook-default-result`: (*Default*: `ABANDON`) Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. This parameter can be either CONTINUE or ABANDON. The default value is ABANDON.
  * `--launching-lifecycle-hook-heartbeat-timeout-seconds`: (*Default*: `3600`) Set the heartbeat timeout for the lifecycle hook. Instances can " +
           "remain in a wait state for a finite period of time. The default is one hour (3600 seconds).
@@ -7380,7 +7430,6 @@ Using {{region}} will make Spinnaker use AWS regions in the hostname to access d
 
  * `--launching-lifecycle-hook-role-arn`: The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target, for example, an Amazon SNS topic or an Amazon SQS queue.
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: (*Default*: `[]`) The AWS regions this Spinnaker account will manage.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
@@ -7438,6 +7487,7 @@ Example: [http://{{region}}.eureka.url.to.use:8080/eureka-server/v2](http://{{re
 Using {{region}} will make Spinnaker use AWS regions in the hostname to access discovery so that you can have discovery for multiple regions.
  * `--edda`: The endpoint Edda is reachable at. Edda is not a hard dependency of Spinnaker, but is helpful for reducing the request volume against AWS. See [https://github.com/Netflix/edda](https://github.com/Netflix/edda) for more information.
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
+ * `--external-id`: Optional parameter used to identify and control access to AWS resources. Set this to the same value as the ExternalID parameter in the trust policy for the role you want to assume.
  * `--launching-lifecycle-hook-default-result`: (*Default*: `ABANDON`) Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. This parameter can be either CONTINUE or ABANDON. The default value is ABANDON.
  * `--launching-lifecycle-hook-heartbeat-timeout-seconds`: (*Default*: `3600`) Set the heartbeat timeout for the lifecycle hook. Instances can " +
           "remain in a wait state for a finite period of time. The default is one hour (3600 seconds).
@@ -7445,7 +7495,6 @@ Using {{region}} will make Spinnaker use AWS regions in the hostname to access d
 
  * `--launching-lifecycle-hook-role-arn`: The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target, for example, an Amazon SNS topic or an Amazon SQS queue.
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: The AWS regions this Spinnaker account will manage.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
@@ -7580,6 +7629,39 @@ hal config provider aws enable [parameters]
 
 
 ---
+## hal config provider aws features
+
+Manage and view Spinnaker configuration for the aws features configuration.
+
+#### Usage
+```
+hal config provider aws features [parameters] [subcommands]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+#### Subcommands
+ * `edit`: Edit features for AWS provider
+
+---
+## hal config provider aws features edit
+
+Edit features for AWS provider
+
+#### Usage
+```
+hal config provider aws features edit [parameters]
+```
+
+#### Parameters
+ * `--cloud-formation`: (*Required*) Enable CloudFormation support for AWS.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
 ## hal config provider azure
 
 Manage and view Spinnaker configuration for the azure provider
@@ -7643,7 +7725,6 @@ hal config provider azure account add ACCOUNT [parameters]
  * `--object-id`: The objectId of your service principal. This is only required if using Packer to bake Windows images.
  * `--packer-resource-group`: The resource group to use if baking images with Packer.
  * `--packer-storage-account`: The storage account to use if baking images with Packer.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: (*Default*: `[westus, eastus]`) The Azure regions this Spinnaker account will manage.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
@@ -7694,7 +7775,6 @@ hal config provider azure account edit ACCOUNT [parameters]
  * `--object-id`: The objectId of your service principal. This is only required if using Packer to bake Windows images.
  * `--packer-resource-group`: The resource group to use if baking images with Packer.
  * `--packer-storage-account`: The storage account to use if baking images with Packer.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: The Azure regions this Spinnaker account will manage.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
@@ -7978,10 +8058,10 @@ hal config provider cloudfoundry account add ACCOUNT [parameters]
  * `--metrics-url, --metrics-uri, --metricsUri`: HTTP(S) URL of the metrics application for the CloudFoundry Foundation ie. `[https://metrics.sys.somesystem.com](https://metrics.sys.somesystem.com)`
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--password`: (*Required*) Password for the account to use on for this CloudFoundry Foundation
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
  * `--skip-ssl-validation`: (*Default*: `false`) Skip SSL server certificate validation of the API endpoint
+ * `--space-filter, --spaceFilter`: Organization and Space filter applied to the Spinnaker CF account
  * `--user`: (*Required*) User name for the account to use on for this CloudFoundry Foundation
  * `--write-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to make changes to this account's cloud resources.
 
@@ -8024,13 +8104,13 @@ hal config provider cloudfoundry account edit ACCOUNT [parameters]
  * `--metrics-url, --metrics-uri, --metricsUri`: HTTP(S) URL of the metrics application for the CloudFoundry Foundation ie. `[https://metrics.sys.somesystem.com](https://metrics.sys.somesystem.com)`
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--password`: Password for the account to use on for this CloudFoundry Foundation
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
  * `--remove-required-group-membership`: Remove this group from the list of required group memberships.
  * `--remove-write-permission`: Remove this permission to from list of write permissions.
  * `--required-group-membership`: A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
  * `--skip-ssl-validation`: (*Default*: `false`) Skip SSL server certificate validation of the API endpoint
+ * `--space-filter, --spaceFilter`: Organization and Space filter applied to the Spinnaker CF account
  * `--user`: User name for the account to use on for this CloudFoundry Foundation
  * `--write-permissions`: A user must have at least one of these roles in order to make changes to this account's cloud resources.
 
@@ -8156,7 +8236,6 @@ hal config provider dcos account add ACCOUNT [parameters]
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--password`: Password for a user account
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
  * `--service-key-file`: Path to a file containing the secret key for service account authentication
@@ -8200,7 +8279,6 @@ hal config provider dcos account edit ACCOUNT [parameters]
  * `--docker-registries`: (*Default*: `[]`) Provide the list of docker registries to use with this DC/OS account
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--remove-credential`: (*Default*: `[]`) Provide the cluster name and uid of credentials to remove: --remove-credential my-cluster my-user
  * `--remove-docker-registry`: Remove this docker registry from the list of docker registries to use as a source of images.
@@ -8460,11 +8538,11 @@ hal config provider docker-registry account add ACCOUNT [parameters]
  * `--password`: (*Sensitive data* - user will be prompted on standard input) Your docker registry password
  * `--password-command`: Command to retrieve docker token/password, commands must be available in environment
  * `--password-file`: The path to a file containing your docker password in plaintext (not a docker/config.json file)
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--repositories`: (*Default*: `[]`) An optional list of repositories to cache images from. If not provided, Spinnaker will attempt to read accessible repositories from the registries _catalog endpoint
+ * `--repositories-regex`: Allows to specify a Regular Expression to filter the repositories.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
- * `--sort-tags-by-date`: (*Default*: `false`) Sort tags by creation date.
+ * `--sort-tags-by-date`: (*Default*: `false`) Sort tags by creation date. Not recommended for use with large registries; sorting performance scales poorly due to limitations of the Docker V2 API.
  * `--track-digests`: (*Default*: `false`) Track digest changes. This is not recommended as it consumes a high QPM, and most registries are flaky.
  * `--username`: Your docker registry username
  * `--write-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to make changes to this account's cloud resources.
@@ -8521,15 +8599,15 @@ hal config provider docker-registry account edit ACCOUNT [parameters]
  * `--password`: (*Sensitive data* - user will be prompted on standard input) Your docker registry password
  * `--password-command`: Command to retrieve docker token/password, commands must be available in environment
  * `--password-file`: The path to a file containing your docker password in plaintext (not a docker/config.json file)
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
  * `--remove-repository`: Remove this repository to the list of repositories to cache images from.
  * `--remove-required-group-membership`: Remove this group from the list of required group memberships.
  * `--remove-write-permission`: Remove this permission to from list of write permissions.
  * `--repositories`: (*Default*: `[]`) An optional list of repositories to cache images from. If not provided, Spinnaker will attempt to read accessible repositories from the registries _catalog endpoint
+ * `--repositories-regex`: Allows to specify a Regular Expression to filter the repositories.
  * `--required-group-membership`: A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
- * `--sort-tags-by-date`: Sort tags by creation date.
+ * `--sort-tags-by-date`: Sort tags by creation date. Not recommended for use with large registries; sorting performance scales poorly due to limitations of the Docker V2 API.
  * `--track-digests`: Track digest changes. This is not recommended as it consumes a high QPM, and most registries are flaky.
  * `--username`: Your docker registry username
  * `--write-permissions`: A user must have at least one of these roles in order to make changes to this account's cloud resources.
@@ -8653,7 +8731,6 @@ hal config provider ecs account add ACCOUNT [parameters]
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
  * `--write-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to make changes to this account's cloud resources.
@@ -8694,7 +8771,6 @@ hal config provider ecs account edit ACCOUNT [parameters]
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
  * `--remove-required-group-membership`: Remove this group from the list of required group memberships.
@@ -8826,7 +8902,6 @@ hal config provider google account add ACCOUNT [parameters]
  * `--json-path`: The path to a JSON service account that Spinnaker will use as credentials. This is only needed if Spinnaker is not deployed on a Google Compute Engine VM, or needs permissions not afforded to the VM it is running on. See [https://cloud.google.com/compute/docs/access/service-accounts](https://cloud.google.com/compute/docs/access/service-accounts) for more information.
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--project`: (*Required*) The Google Cloud Platform project this Spinnaker account will manage.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: A list of regions for caching and mutating calls. This overwrites any default-regions set on the provider.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
@@ -8873,7 +8948,6 @@ hal config provider google account edit ACCOUNT [parameters]
  * `--json-path`: The path to a JSON service account that Spinnaker will use as credentials. This is only needed if Spinnaker is not deployed on a Google Compute Engine VM, or needs permissions not afforded to the VM it is running on. See [https://cloud.google.com/compute/docs/access/service-accounts](https://cloud.google.com/compute/docs/access/service-accounts) for more information.
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--project`: The Google Cloud Platform project this Spinnaker account will manage.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: A list of regions for caching and mutating calls. This overwrites any default-regions set on the provider.
  * `--remove-image-project`: Remove this image project from the list of image projects to cache and deploy images from.
@@ -9182,7 +9256,6 @@ hal config provider huaweicloud account add ACCOUNT [parameters]
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--password`: (*Required*) (*Sensitive data* - user will be prompted on standard input) (Sensitive data - user will be prompted on standard input) The password used to access cloud.
  * `--project-name`: (*Required*) The name of the project within the cloud.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: (*Default*: `[]`) (*Required*) The region(s) of the cloud.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
@@ -9231,7 +9304,6 @@ hal config provider huaweicloud account edit ACCOUNT [parameters]
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--password`: (*Sensitive data* - user will be prompted on standard input) (Sensitive data - user will be prompted on standard input) The password used to access cloud.
  * `--project-name`: The name of the project within the cloud.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: (*Default*: `[]`) The region(s) of the cloud.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
@@ -9525,6 +9597,8 @@ hal config provider kubernetes account add ACCOUNT [parameters]
 
 #### Parameters
 `ACCOUNT`: The name of the account to operate on.
+ * `--cache-all-application-relationships`: If true, will add application relationships in the cache for all types of resources.
+This includes CRDs and resources that aren't used in the Clusters, Load Balancers or Firewalls sections.
  * `--cache-threads`: (*Default*: `1`) Number of caching agents for this kubernetes account. Each agent handles a subset of the namespaces available to this account. By default, only 1 agent caches all kinds for all namespaces in the account.
  * `--check-permissions-on-startup`: When false, clouddriver will skip the permission checks for all kubernetes kinds at startup. This can save a great deal of time
 during clouddriver startup when you have many kubernetes accounts configured. This disables the log messages at startup about missing permissions.
@@ -9548,7 +9622,9 @@ This can only be set when --kinds is empty or not set.
 This can only be set when --namespaces is empty or not set.
  * `--only-spinnaker-managed`: (*Default*: `false`) (V2 Only) When true, Spinnaker will only cache/display applications that have been
 created by Spinnaker; as opposed to attempting to configure applications for resources already present in Kubernetes.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
+ * `--provider-version`: (*Default*: `v2`) There are currently two versions of the Kubernetes Provider: V1 and V2. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.V1 is scheduled for removal in Spinnaker 1.21; we recommend using V2 only.
+ * `--raw-resource-endpoint-kind-expressions`: (*Default*: `[]`) (V2 Only) A list of resource kind regular expressions that the raw resources endpoint will use to filter resources. Only resources matching one or more of the provided expressions will be returned.
+ * `--raw-resource-endpoint-omit-kind-expressions`: (*Default*: `[]`) (V2 Only) A list of resource kind regular expressions that the raw resources endpoint will use to filter resources. Only resources that don't match any of the provided expressions will be returned. This can only be set when --raw-resource-endpoint-kinds is empty or not set
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
  * `--service-account`: When true, Spinnaker attempt to authenticate against Kubernetes using a Kubernetes service account. This only works when Halyard & Spinnaker are deployed in Kubernetes. Read more about service accounts here: [https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/).
@@ -9589,11 +9665,15 @@ hal config provider kubernetes account edit ACCOUNT [parameters]
  * `--add-namespace`: Add this namespace to the list of namespaces to manage.
  * `--add-omit-kind`: Add this kind to the list of kinds to omit.
  * `--add-omit-namespace`: Add this namespace to the list of namespaces to omit.
+ * `--add-raw-resource-endpoint-kind-expression`: Add this expression to the list of kind expressions for the raw resource endpoint configuration.
+ * `--add-raw-resource-endpoint-omit-kind-expression`: Add this expression to the list of omit kind expressions for the raw resources endpoint configuration.
  * `--add-read-permission`: Add this permission to the list of read permissions.
  * `--add-required-group-membership`: Add this group to the list of required group memberships.
  * `--add-write-permission`: Add this permission to the list of write permissions.
  * `--all-kinds`: (*Default*: `false`) Set the list of kinds to cache and deploy to every kind available to your supplied credentials.
  * `--all-namespaces`: (*Default*: `false`) Set the list of namespaces to cache and deploy to every namespace available to your supplied credentials.
+ * `--cache-all-application-relationships`: If true, will add application relationships in the cache for all types of resources.
+This includes CRDs and resources that aren't used in the Clusters, Load Balancers or Firewalls sections.
  * `--cache-threads`: Number of caching agents for this kubernetes account. Each agent handles a subset of the namespaces available to this account. By default, only 1 agent caches all kinds for all namespaces in the account.
  * `--check-permissions-on-startup`: When false, clouddriver will skip the permission checks for all kubernetes kinds at startup. This can save a great deal of time
 during clouddriver startup when you have many kubernetes accounts configured. This disables the log messages at startup about missing permissions.
@@ -9618,7 +9698,9 @@ This can only be set when --kinds is empty or not set.
 This can only be set when --namespaces is empty or not set.
  * `--only-spinnaker-managed`: (V2 Only) When true, Spinnaker will only cache/display applications that have been
 created by Spinnaker; as opposed to attempting to configure applications for resources already present in Kubernetes.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
+ * `--provider-version`: There are currently two versions of the Kubernetes Provider: V1 and V2. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.V1 is scheduled for removal in Spinnaker 1.21; we recommend using V2 only.
+ * `--raw-resource-endpoint-kind-expressions`: (*Default*: `[]`) (V2 Only) A list of resource kind regular expressions that the raw resources endpoint will use to filter resources. Only resources matching one or more of the provided expressions will be returned.
+ * `--raw-resource-endpoint-omit-kind-expressions`: (*Default*: `[]`) (V2 Only) A list of resource kind regular expressions that the raw resources endpoint will use to filter resources. Only resources that don't match any of the provided expressions will be returned. This can only be set when --raw-resource-endpoint-kinds is empty or not set
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--remove-custom-resource`: Remove this Kubernetes custom resource by name from the list of custom resources to manage.
  * `--remove-docker-registry`: Remove this docker registry from the list of docker registries to use as a source of images.
@@ -9626,6 +9708,8 @@ created by Spinnaker; as opposed to attempting to configure applications for res
  * `--remove-namespace`: Remove this namespace to the list of namespaces to manage.
  * `--remove-omit-kind`: Remove this kind to the list of kinds to omit.
  * `--remove-omit-namespace`: Remove this namespace to the list of namespaces to omit.
+ * `--remove-raw-resource-endpoint-kind-expression`: Remove this expression from list of kind expressions for the raw resource endpoint configuration.
+ * `--remove-raw-resource-endpoint-omit-kind-expression`: Remove this expression from the list of omit kind expressions for the raw resources endpoint configuration.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
  * `--remove-required-group-membership`: Remove this group from the list of required group memberships.
  * `--remove-write-permission`: Remove this permission to from list of write permissions.
@@ -9772,7 +9856,6 @@ hal config provider oracle account add ACCOUNT [parameters]
  * `--fingerprint`: (*Required*) Fingerprint of the public key
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--private-key-passphrase`: (*Sensitive data* - user will be prompted on standard input) Passphrase used for the private key, if it is encrypted
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--region`: (*Required*) An Oracle region (e.g., us-phoenix-1)
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
@@ -9819,7 +9902,6 @@ hal config provider oracle account edit ACCOUNT [parameters]
  * `--fingerprint`: Fingerprint of the public key
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--private-key-passphrase`: (*Sensitive data* - user will be prompted on standard input) Passphrase used for the private key, if it is encrypted
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--region`: An Oracle region (e.g., us-phoenix-1)
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
@@ -10285,7 +10367,6 @@ hal config provider tencentcloud account add ACCOUNT [parameters]
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: The Tencent CLoud regions this Spinnaker account will manage.
  * `--required-group-membership`: (*Default*: `[]`) A user must be a member of at least one specified group in order to make changes to this account's cloud resources.
@@ -10329,7 +10410,6 @@ hal config provider tencentcloud account edit ACCOUNT [parameters]
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--environment`: The environment name for the account. Many accounts can share the same environment (e.g. dev, test, prod)
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--provider-version`: Some providers support multiple versions/release tracks. This allows you to pick the version of the provider (not the resources it manages) to run within Spinnaker.
  * `--read-permissions`: A user must have at least one of these roles in order to view this account's cloud resources.
  * `--regions`: The Tencent CLoud regions this Spinnaker account will manage.
  * `--remove-read-permission`: Remove this permission from the list of read permissions.
@@ -10523,8 +10603,8 @@ hal config provider tencentcloud bakery edit [parameters]
 #### Parameters
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--no-validate`: (*Default*: `false`) Skip validation.
- * `--secret-id`: (*Required*) The default access key used to communicate with AWS.
- * `--secret-key`: (*Required*) (*Sensitive data* - user will be prompted on standard input) The secret key used to communicate with AWS.
+ * `--secret-id`: (*Required*) The default secret id used to communicate with Tencent Cloud.
+ * `--secret-key`: (*Required*) (*Sensitive data* - user will be prompted on standard input) The secret key used to communicate with Tencent Cloud.
  * `--template-file`: This is the name of the packer template that will be used to bake images from this base image. The template file must be found in this list [https://github.com/spinnaker/rosco/tree/master/rosco-web/config/packer](https://github.com/spinnaker/rosco/tree/master/rosco-web/config/packer), or supplied as described here: [https://spinnaker.io/setup/bakery/](https://spinnaker.io/setup/bakery/)
 
 
@@ -10749,6 +10829,7 @@ hal config repository [subcommands]
 
 #### Subcommands
  * `artifactory`: Manage and view Spinnaker configuration for the artifactory repository
+ * `nexus`: Manage and view Spinnaker configuration for the nexus repository
 
 ---
 ## hal config repository artifactory
@@ -10913,6 +10994,174 @@ List the search names for artifactory.
 #### Usage
 ```
 hal config repository artifactory search list [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config repository nexus
+
+Manage and view Spinnaker configuration for the nexus repository
+
+#### Usage
+```
+hal config repository nexus [parameters] [subcommands]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+#### Subcommands
+ * `disable`: Set the nexus repository as disabled
+ * `enable`: Set the nexus repository as enabled
+ * `search`: Manage and view Spinnaker configuration for the nexus repository services's search
+
+---
+## hal config repository nexus disable
+
+Set the nexus repository as disabled
+
+#### Usage
+```
+hal config repository nexus disable [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config repository nexus enable
+
+Set the nexus repository as enabled
+
+#### Usage
+```
+hal config repository nexus enable [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config repository nexus search
+
+Manage and view Spinnaker configuration for the nexus repository services's search
+
+#### Usage
+```
+hal config repository nexus search SEARCH [parameters] [subcommands]
+```
+
+#### Parameters
+`SEARCH`: The name of the search to operate on.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+#### Subcommands
+ * `add`: Add a search for the nexus repository service.
+ * `delete`: Delete a specific nexus search by name.
+ * `edit`: Edit a search for the nexus repository service.
+ * `get`: Get the specified search details for nexus.
+ * `list`: List the search names for nexus.
+
+---
+## hal config repository nexus search add
+
+Add a search for the nexus repository service.
+
+#### Usage
+```
+hal config repository nexus search add SEARCH [parameters]
+```
+
+#### Parameters
+`SEARCH`: The name of the search to operate on.
+ * `--base-url`: (*Required*) The base url your nexus search is reachable at.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+ * `--nodeId`: The optional node ID for the repo in your nexus to be searched. Used when repo name is ambiguous.
+ * `--password`: (*Required*) (*Sensitive data* - user will be prompted on standard input) The password of the nexus user to authenticate as.
+ * `--read-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to view this build search or use it as a trigger source.
+ * `--repo`: (*Required*) The repo in your nexus to be searched.
+ * `--username`: (*Required*) The username of the nexus user to authenticate as.
+ * `--write-permissions`: (*Default*: `[]`) A user must have at least one of these roles in order to be able to run jobs on this build search.
+
+
+---
+## hal config repository nexus search delete
+
+Delete a specific nexus search by name.
+
+#### Usage
+```
+hal config repository nexus search delete SEARCH [parameters]
+```
+
+#### Parameters
+`SEARCH`: The name of the search to operate on.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config repository nexus search edit
+
+Edit a search for the nexus repository service.
+
+#### Usage
+```
+hal config repository nexus search edit SEARCH [parameters]
+```
+
+#### Parameters
+`SEARCH`: The name of the search to operate on.
+ * `--add-read-permission`: Add this permission to the list of read permissions.
+ * `--add-write-permission`: Add this permission to the list of write permissions.
+ * `--base-url`: The base url your nexus search is reachable at.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+ * `--nodeId`: The optional node ID for the repo in your nexus to be searched. Used when repo name is ambiguous.
+ * `--password`: The password of the nexus user to authenticate as.
+ * `--read-permissions`: A user must have at least one of these roles in order to view this build search or use it as a trigger source.
+ * `--remove-read-permission`: Remove this permission from the list of read permissions.
+ * `--remove-write-permission`: Remove this permission from the list of write permissions.
+ * `--repo`: The repo in your nexus to be searched.
+ * `--username`: The username of the nexus user to authenticate as.
+ * `--write-permissions`: A user must have at least one of these roles in order to be able to run jobs on this build search.
+
+
+---
+## hal config repository nexus search get
+
+Get the specified search details for nexus.
+
+#### Usage
+```
+hal config repository nexus search get SEARCH [parameters]
+```
+
+#### Parameters
+`SEARCH`: The name of the search to operate on.
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config repository nexus search list
+
+List the search names for nexus.
+
+#### Usage
+```
+hal config repository nexus search list [parameters]
 ```
 
 #### Parameters
@@ -11338,6 +11587,7 @@ hal config security authn saml edit [parameters]
  * `--metadata`: The address to your identity provider's metadata XML file. This can be a URL or the path of a local file.
  * `--no-validate`: (*Default*: `false`) Skip validation.
  * `--service-address-url`: The address of the Gate server that will be accesible by the SAML identity provider. This should be the full URL, including port, e.g. [https://gate.org.com:8084/](https://gate.org.com:8084/). If deployed behind a load balancer, this would be the laod balancer's address.
+ * `--signature-digest`: Digest algorithm to sign SAML messages (optional). Valid values include "SHA1", "SHA256", "SHA384", "SHA512", "RIPEMD160" and "MD5".
  * `--user-attribute-mapping-email`: The email field returned from your SAML provider.
  * `--user-attribute-mapping-first-name`: The first name field returned from your SAML provider.
  * `--user-attribute-mapping-last-name`: The last name field returned from your SAML provider.
@@ -11743,6 +11993,71 @@ hal config security ui ssl enable [parameters]
 
 
 ---
+## hal config stats
+
+Show Spinnaker's stats settings.
+
+#### Usage
+```
+hal config stats [parameters] [subcommands]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+#### Subcommands
+ * `disable`: Set Spinnaker's stats settings to disabled.
+ * `edit`: Edit Spinnaker's stats settings.
+ * `enable`: Set Spinnaker's stats settings to enabled.
+
+---
+## hal config stats disable
+
+Set Spinnaker's stats settings to disabled.
+
+#### Usage
+```
+hal config stats disable [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config stats edit
+
+Edit Spinnaker's stats settings.
+
+#### Usage
+```
+hal config stats edit [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--endpoint`: Set the endpoint for stats metrics.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
+## hal config stats enable
+
+Set Spinnaker's stats settings to enabled.
+
+#### Usage
+```
+hal config stats enable [parameters]
+```
+
+#### Parameters
+ * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
+ * `--no-validate`: (*Default*: `false`) Skip validation.
+
+
+---
 ## hal config storage
 
 Show Spinnaker's persistent storage configuration.
@@ -11933,71 +12248,6 @@ Example: "user/spinnaker" or "role/spinnakerManaged"
  * `--root-folder`: The root folder in the chosen bucket to place all of Spinnaker's persistent data in.
  * `--secret-access-key`: (*Sensitive data* - user will be prompted on standard input) Your AWS Secret Key.
  * `--server-side-encryption`: Use Amazon Server-Side Encryption ('x-amz-server-side-encryption' header). Supports 'AES256' (for Amazon S3-managed encryption keys, equivalent to a header value of 'AES256') and 'AWSKMS' (for AWS KMS-managed encryption keys, equivalent to a header value of 'aws:kms'.
-
-
----
-## hal config telemetry
-
-Show Spinnaker's telemetry settings.
-
-#### Usage
-```
-hal config telemetry [parameters] [subcommands]
-```
-
-#### Parameters
- * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
- * `--no-validate`: (*Default*: `false`) Skip validation.
-
-#### Subcommands
- * `disable`: Set Spinnaker's telemetry settings to disabled.
- * `edit`: Edit Spinnaker's telemetry settings.
- * `enable`: Set Spinnaker's telemetry settings to enabled.
-
----
-## hal config telemetry disable
-
-Set Spinnaker's telemetry settings to disabled.
-
-#### Usage
-```
-hal config telemetry disable [parameters]
-```
-
-#### Parameters
- * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
- * `--no-validate`: (*Default*: `false`) Skip validation.
-
-
----
-## hal config telemetry edit
-
-Edit Spinnaker's telemetry settings.
-
-#### Usage
-```
-hal config telemetry edit [parameters]
-```
-
-#### Parameters
- * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
- * `--endpoint`: Set the endpoint for telemetry metrics.
- * `--no-validate`: (*Default*: `false`) Skip validation.
-
-
----
-## hal config telemetry enable
-
-Set Spinnaker's telemetry settings to enabled.
-
-#### Usage
-```
-hal config telemetry enable [parameters]
-```
-
-#### Parameters
- * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
- * `--no-validate`: (*Default*: `false`) Skip validation.
 
 
 ---
@@ -12279,7 +12529,6 @@ hal plugins [parameters] [subcommands]
  * `delete`: Delete a plugin
  * `disable`: Enable or disable all plugins
  * `disable-downloading`: Enable or disable the ability for Spinnaker services to download jars for plugins
- * `edit`: Edit a plugin
  * `enable`: Enable or disable all plugins
  * `enable-downloading`: Enable or disable the ability for Spinnaker services to download jars for plugins
  * `list`: List all plugins
@@ -12299,8 +12548,9 @@ hal plugins add PLUGIN [parameters]
 `PLUGIN`: The name of the plugin to operate on.
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
  * `--enabled`: To enable or disable the plugin.
- * `--manifest-location`: (*Required*) The location of the plugin's manifest file.
+ * `--extensions`: A comma separated list of extensions to enable
  * `--no-validate`: (*Default*: `false`) Skip validation.
+ * `--version`: The plugin version to use
 
 
 ---
@@ -12346,24 +12596,6 @@ hal plugins disable-downloading [parameters]
 
 #### Parameters
  * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
- * `--no-validate`: (*Default*: `false`) Skip validation.
-
-
----
-## hal plugins edit
-
-Edit a plugin
-
-#### Usage
-```
-hal plugins edit PLUGIN [parameters]
-```
-
-#### Parameters
-`PLUGIN`: The name of the plugin to operate on.
- * `--deployment`: If supplied, use this Halyard deployment. This will _not_ create a new deployment.
- * `--enabled`: To enable or disable the plugin.
- * `--manifest-location`: The location of the plugin's manifest file.
  * `--no-validate`: (*Default*: `false`) Skip validation.
 
 
